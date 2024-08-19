@@ -1,5 +1,6 @@
 package com.amazon.ata.lists.stringbuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,16 +13,17 @@ public class ATAStringBuilder {
 
     /**
      * COMPLETION 1
-     *
+     * <p>
      * Constructs a string builder with no characters in it.
      */
     public ATAStringBuilder() {
         // PARTICIPANTS - initialize here
+        this.value = new ArrayList<>();
     }
 
     /**
      * COMPLETION 1
-     *
+     * <p>
      * Constructs a string builder initialized to the contents of the
      * specified string.
      *
@@ -29,11 +31,16 @@ public class ATAStringBuilder {
      */
     public ATAStringBuilder(String initialString) {
         // PARTICIPANTS - initialize here
+        this();
+        for (int i = 0; i < initialString.length(); i++) {
+            this.value.add(initialString.charAt(i));
+        }
+
     }
 
     /**
      * COMPLETION 2
-     *
+     * <p>
      * Returns the length (character count).
      *
      * @return the length of the sequence of characters currently
@@ -41,12 +48,12 @@ public class ATAStringBuilder {
      */
     public int length() {
         // PARTICIPANTS - implement here
-        return -1;
+        return value.size();
     }
 
     /**
      * COMPLETION 2
-     *
+     * <p>
      * Appends the specified string.
      * <p>
      * The characters of the {@code String} argument are appended, in
@@ -59,12 +66,23 @@ public class ATAStringBuilder {
      */
     public ATAStringBuilder append(String str) {
         // PARTICIPANTS - implement here
+     /*   int newStringLength=(value.size())+(str.length()-1);
+        for (int i = this.value.size(); i <= newStringLength; i++) {
+            this.value.add(str.charAt(i));
+        }*/
+        int index = 0;
+        str = str + "";
+
+        while (index != str.toString().length()) {
+            this.value.add(str.charAt(index));
+            index++;
+        }
         return this;
     }
 
     /**
      * COMPLETION 2
-     *
+     * <p>
      * Inserts the {@code char} argument into this sequence.
      * <p>
      * The {@code offset} argument must be greater than or equal to
@@ -78,12 +96,13 @@ public class ATAStringBuilder {
      */
     public ATAStringBuilder insert(int offset, char c) {
         // PARTICIPANTS - implement here
+        this.value.add(offset, c);
         return this;
     }
 
     /**
      * COMPLETION 2
-     *
+     * <p>
      * Returns the {@code char} value in this sequence at the specified index.
      * The first {@code char} value is at index {@code 0}, the next at index
      * {@code 1}, and so on, as in array indexing.
@@ -98,7 +117,7 @@ public class ATAStringBuilder {
      */
     public char charAt(int index) {
         // PARTICIPANTS - implement here
-        return ' ';
+        return this.value.get(index);
     }
 
     /**
@@ -120,6 +139,7 @@ public class ATAStringBuilder {
      */
     public ATAStringBuilder setCharAt(int index, char ch) {
         // PARTICIPANTS - implement here
+        this.value.set(index, ch);
         return this;
     }
 
@@ -137,6 +157,7 @@ public class ATAStringBuilder {
      */
     public ATAStringBuilder deleteCharAt(int index) {
         // PARTICIPANTS - implement here
+        this.value.remove(index);
         return this;
     }
 
@@ -158,7 +179,17 @@ public class ATAStringBuilder {
      */
     public String substring(int start, int end) {
         // PARTICIPANTS - implement here
-        return null;
+        String newString = "";
+        if (start < 0 || start > value.size() || end < 0 || end > value.size() || start > end) {
+            throw new IndexOutOfBoundsException();
+        } else {
+            for (int i = start; i < end; i++) {
+                newString = newString.concat(this.value.get(i).toString());
+
+            }
+        }
+
+        return newString;
     }
 
     /**
@@ -186,6 +217,12 @@ public class ATAStringBuilder {
     //CHECKSTYLE:OFF:OverloadMethodsDeclarationOrder
     public ATAStringBuilder insert(int offset, String str) {
         // PARTICIPANTS - implement here
+        int j = 0;
+        while (j != str.length()) {
+            this.value.add(offset, str.charAt(j));
+            offset++;
+            j++;
+        }
         return this;
     }
     //CHECKSTYLE:ON:OverloadMethodsDeclarationOrder
@@ -203,6 +240,7 @@ public class ATAStringBuilder {
     //CHECKSTYLE:OFF:OverloadMethodsDeclarationOrder
     public ATAStringBuilder append(Object obj) {
         // PARTICIPANTS - implement here
+        this.append(obj.toString());
         return this;
     }
     //CHECKSTYLE:ON:OverloadMethodsDeclarationOrder
